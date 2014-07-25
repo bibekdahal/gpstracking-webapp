@@ -13,7 +13,7 @@ class UsersController extends BaseController {
 	}
 
 	public function postIndex() {
-		if (Auth::attempt(array('email'=>Input::get('email'), 'password'=>Input::get('password'))))
+		if (Auth::attempt(array('email'=>Input::get('email'), 'password'=>Input::get('password')), Input::has('remember')))
 		    return Redirect::to('index')->with('message', 'You are now logged in! ');
 		else
 		    return Redirect::to('index')

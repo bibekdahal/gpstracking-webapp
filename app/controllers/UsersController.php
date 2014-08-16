@@ -55,6 +55,7 @@ class UsersController extends BaseController {
 		foreach ($history as $data) {
 			$newHistory = new History(array(
 				'phone_id' => $userinfo["PhoneId"],
+				'local_id' => $data["Local_Id"],
 				'latitude' => $data["Latitude"],
 				'longitude' => $data["Longitude"],
 				'speed' => $data["Speed"],
@@ -65,5 +66,28 @@ class UsersController extends BaseController {
 			$user->history()->save($newHistory);
 		}
 		return "SUCCESS 101";
+	}
+
+	public function postUploadImage() {
+		$email = Input::get('email');
+		$password = Input::get('password');
+		if (!Auth::validate(array('email'=>$email, 'password'=>$password)))
+			return "INVALID EMAIL PASSWORD";
+
+		if (!Input::file('userfile')->isValid()) return "UNSUCCESSFUL";
+		$destpath = "images/".Input::get('email');
+		Input::file('userfile')->move($destpath, Input::file('userfile')->getClientOriginalName());
+
+		$user = User::where('email', '=', Input::get('email'))->first();
+		$history = $user->history()->where('local_id', '=', Input::get('historyId'))->first();
+		if ($history!=null) {
+			$newimage = new Image(array(
+				'filepath' => Input::file('userfile')->getClientOriginalName()
+			));
+
+			$history->images()->save($newimage);
+			return "SUCCESS 101";
+		}
+		return "UNSUCCESSFUL";
 	}
 }

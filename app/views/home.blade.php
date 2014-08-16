@@ -18,6 +18,22 @@
             }
         </style>
         {{ HTML::script("https://maps.googleapis.com/maps/api/js?key=AIzaSyDUn8hZ5V_pl0b2WYCx_c7tJJOjv-2Tpsk") }}
+
+        <script type="text/javascript">
+            var points = [
+                <?php
+                foreach ($history as $data)
+                    echo 'new google.maps.LatLng(' . $data->latitude . ',' . $data->longitude . '),';
+                ?>
+            ];
+            var times = [
+                <?php
+                foreach ($history as $data)
+                    echo '"'. $data->time . '",';
+                ?>
+            ];
+            
+        </script>
         {{ HTML::script("js/map-functions.js") }}
     @endif
 @stop
@@ -28,7 +44,7 @@
         @endif
     </div>
     <div class="container">
-        {{ Form::open(array('url'=>'index', 'class'=>'form-signin')) }}
+        {{ Form::open(array('url'=>'login', 'class'=>'form-signin')) }}
         <h2 class="form-signin-heading">Please sign in</h2>
         <input type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
         <input type="password" name="password" class="form-control" placeholder="Password" required>
@@ -47,4 +63,31 @@
         <div id="map-canvas"> </div>    
         <img id="map-img" onclick="clickImage();" />
     </div>
+    <div class="container" style="margin-top:50px">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Phone Id</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Speed</th>
+                    <th>Direction</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($history as $data)
+                echo '<tr>
+                        <td>'.$data->phone_id.'</td>
+                        <td>'.$data->latitude.'</td>
+                        <td>'.$data->longitude.'</td>
+                        <td>'.$data->speed.'</td>
+                        <td>'.$data->direction.'</td>
+                        <td>'.$data->time.'</td>
+                    </tr>'
+                ?>
+            </tbody>
+        </table>     
+    </div>                             
 @endif

@@ -26,17 +26,16 @@
                 mapOptions);
         var bounds = new google.maps.LatLngBounds();
 
-        var points = [
+        /*var points = [
             new google.maps.LatLng(27.0172323, 85.214897),
             new google.maps.LatLng(27.0191982, 85.121856),
             new google.maps.LatLng(26.9999, 84.99431),
             new google.maps.LatLng(26.998, 84.99027892)
-        ];
-    
+        ];*/    
         var image = new google.maps.MarkerImage("images/marker.png",
             null, 
             new google.maps.Point(0,0),
-            new google.maps.Point(10, 10)
+            new google.maps.Point(3, 3)
         );
         for (i=0; i<points.length; ++i)
         {
@@ -44,7 +43,7 @@
                 position: points[i],
                 map: map,
                 icon: image,
-                title:"2014/7/21 - 1" + i + ":0" + i
+                title: times[i]
             });
             bounds.extend(points[i]);
         }
@@ -53,7 +52,7 @@
         var linePath = new google.maps.Polyline({
             path: points,
             geodesic: true,
-            strokeColor: '#FF0000',
+            strokeColor: '#0000ff',
             strokeOpacity: 1.0,
             strokeWeight: 2
         });
@@ -62,8 +61,8 @@
 
 
         var images = [
-            'http://imgs.xkcd.com/comics/darkness.png',
-            'http://assets.amuniversal.com/b5110bd0541f01315eb4001dd8b71c47'
+            /*'http://imgs.xkcd.com/comics/darkness.png',
+            'http://assets.amuniversal.com/b5110bd0541f01315eb4001dd8b71c47'*/
         ];
         var imagePoints = [
             2, 0

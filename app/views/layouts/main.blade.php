@@ -35,13 +35,9 @@
             <ul class="nav navbar-nav">
                 <li @if($active=="Home")class="active"@endif><a href="index">Home</a></li>
             </ul>
-            <ul class="nav nav-pills pull-right">
+            <ul class="nav navbar-nav navbar-right">
                 @if(Auth::check())
-                <li>
-                    {{ Form::open(array('url'=>'home')) }}
-                        <button class="btn btn-primary btn-block" style="padding: 15px 20px;" type="submit">Log Out</button>
-                    {{ Form::close() }}
-                </li>
+                <li class="active"><a href="home/logout" style="background-color:#bbf">Log Out</a></li>
                 @endif
             </ul>
             </div>

@@ -22,8 +22,37 @@
         <script type="text/javascript">
             var points = [
                 <?php
-                foreach ($history as $data)
+                $i=0;
+                foreach ($history as $data) {
                     echo 'new google.maps.LatLng(' . $data->latitude . ',' . $data->longitude . '),';
+                    $images = $data->images()->get();
+                    foreach ($images as $image) {
+                        $imgsids[$image->id] = $i;
+                    }
+                    $i++;
+                }
+                ?>
+            ];
+            var images = [
+                <?php
+                    foreach ($history as $data) {
+                        $images = $data->images()->get();
+                        foreach ($images as $image) {
+                            echo '"images/' . Auth::user()->email . '/' . $image->filepath . '",';
+                        }
+                        $i++;
+                    }
+                ?>
+            ];
+            var imagePoints = [
+                <?php
+                    foreach ($history as $data) {
+                        $images = $data->images()->get();
+                        foreach ($images as $image) {
+                            echo $imgsids[$image->id] . ',';
+                        }
+                        $i++;
+                    }
                 ?>
             ];
             var times = [
@@ -56,6 +85,7 @@
 @endif
 
 @if($show_map)
+    <h2>Your History</h2>
     <div id="map-parent">
         <div id="map-canvas"> </div>    
         <img id="map-img" onclick="clickImage();" />

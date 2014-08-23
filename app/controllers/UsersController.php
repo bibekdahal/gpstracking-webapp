@@ -21,8 +21,8 @@ class UsersController extends BaseController {
 		    return Redirect::to('index')->with('message', 'You are now logged in! ');
 		else
 		    return Redirect::to('login')
-		        ->with('message', 'Your username/password combination was incorrect')
-		        ->withInput();
+					->with('message', 'Your username/password combination was incorrect')
+					->withInput();	
 	}
 
 	public function postCheckEmailPassword() {

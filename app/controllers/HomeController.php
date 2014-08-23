@@ -23,10 +23,10 @@ class HomeController extends BaseController {
 		$this->layout->content = View::make('home', array('show_map'=>true, 'show_login'=>false,
 			'history'=>$history));
 	}
+	
 	public function getLogout()
 	{
 		Auth::logout();
 		return Redirect::to('index');
 	}
-
 }

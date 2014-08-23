@@ -9,15 +9,13 @@
 
         <style>
             body {
-                padding-top: 100px;
+                padding-top: 60px;
                 padding-bottom: 40px;
                 background-color: #eee;
             }
             li.active {
                 font-weight: bold;
-            }
-
-            
+            }            
         </style>
         @yield('header')
     </head>
@@ -42,6 +40,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::check())
+                <li><a href="#">My Profile</a></li>
                 <li><a href="home/logout" style="font-weight:bold;">Log Out</a></li>
                 @endif
             </ul>

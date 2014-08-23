@@ -9,13 +9,15 @@
 
         <style>
             body {
-                padding-top: 40px;
+                padding-top: 100px;
                 padding-bottom: 40px;
                 background-color: #eee;
             }
             li.active {
                 font-weight: bold;
             }
+
+            
         </style>
         @yield('header')
     </head>
@@ -27,25 +29,34 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
             </button>
-            <div class="navbar-brand" ><span style="color:#292;">GPS Tracking System</span></div>
+            <div class="navbar-brand">GPS Tracking Application</div>
             </div>
             <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li @if($active=="Home")class="active"@endif><a href="index">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Faq</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::check())
-                <li class="active"><a href="home/logout" style="background-color:#bbf">Log Out</a></li>
+                <li><a href="home/logout" style="font-weight:bold;">Log Out</a></li>
                 @endif
             </ul>
             </div>
         </div>
         </div>
 
-        <br/><br/>
+        <div class="container">
+        <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+
         {{ $content }}
+        </div>
+        </div>
+        </div>
         
 
         {{ HTML::script('js/jquery.min.js') }}

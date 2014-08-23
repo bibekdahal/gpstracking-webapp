@@ -38,24 +38,21 @@
     @endif
 @stop
 @if ($show_login)
-    <div class="container">
+
+    {{ Form::open(array('url'=>'login', 'class'=>'form-signin')) }}
+    <h2 class="form-signin-heading">Please sign in</h2>
         @if(Session::has('message'))
-            <p class="alert">{{ Session::get('message') }}</p>
+            <p class="text-danger">{{ Session::get('message') }}</p>
         @endif
+    <input type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
+    <input type="password" name="password" class="form-control" placeholder="Password" required>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="remember" value="remember-me"> Remember me
+        </label>
     </div>
-    <div class="container">
-        {{ Form::open(array('url'=>'login', 'class'=>'form-signin')) }}
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
-        <input type="password" name="password" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" name="remember" value="remember-me"> Remember me
-            </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        {{ Form::close() }}
-    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    {{ Form::close() }}
 @endif
 
 @if($show_map)
@@ -63,8 +60,8 @@
         <div id="map-canvas"> </div>    
         <img id="map-img" onclick="clickImage();" />
     </div>
-    <div class="container" style="margin-top:50px">
-        <table class="table">
+    <!--div class="container" style="margin-top:50px"-->
+        <table class="table" style="margin-top:50px">
             <thead>
                 <tr>
                     <th>Phone Id</th>
@@ -89,5 +86,5 @@
                 ?>
             </tbody>
         </table>     
-    </div>                             
+    <!--/div-->                             
 @endif

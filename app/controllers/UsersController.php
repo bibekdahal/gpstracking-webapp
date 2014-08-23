@@ -20,7 +20,7 @@ class UsersController extends BaseController {
 		if (Auth::attempt(array('email'=>Input::get('email'), 'password'=>Input::get('password')), Input::has('remember')))
 		    return Redirect::to('index')->with('message', 'You are now logged in! ');
 		else
-		    return Redirect::to('index')
+		    return Redirect::to('login')
 		        ->with('message', 'Your username/password combination was incorrect')
 		        ->withInput();
 	}

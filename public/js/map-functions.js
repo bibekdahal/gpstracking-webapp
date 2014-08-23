@@ -65,7 +65,7 @@
             'http://assets.amuniversal.com/b5110bd0541f01315eb4001dd8b71c47'*/
         ];
         var imagePoints = [
-            2, 0
+            //2, 0
         ];  // index for points
         var imgOverlays = [];
         google.maps.event.addListener(map, 'zoom_changed', function() {

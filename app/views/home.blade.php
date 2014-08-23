@@ -13,7 +13,7 @@
             #map-img {
                 position: absolute;
                 top: 80px;
-                left: 20px;
+                left: 60px;
                 visibility: visible;
             }
         </style>
@@ -88,7 +88,8 @@
     <h2>Your History</h2>
     <div id="map-parent">
         <div id="map-canvas"> </div>    
-        <img id="map-img" onclick="clickImage();" />
+        <img id="map-img" style="width:auto; height:90%; " onclick="clickImage();" />
+        </span>
     </div>
     <!--div class="container" style="margin-top:50px"-->
         <table class="table" style="margin-top:50px">

@@ -1,6 +1,7 @@
 @section('header')
     @if($show_login) {{ HTML::style("css/sign-in.css") }} @endif
     @if($show_map)
+        {{ HTML::style("css/lightbox.css") }}
         <style type="text/css">
             #map-parent {
                 position: relative;
@@ -9,12 +10,6 @@
                 top: 20px;
                 width: 100%;
                 height: 400px;
-            }
-            #map-img {
-                position: absolute;
-                top: 80px;
-                left: 60px;
-                visibility: visible;
             }
         </style>
         {{ HTML::script("https://maps.googleapis.com/maps/api/js?key=AIzaSyDUn8hZ5V_pl0b2WYCx_c7tJJOjv-2Tpsk") }}
@@ -39,6 +34,18 @@
                         $images = $data->images()->get();
                         foreach ($images as $image) {
                             echo '"images/' . Auth::user()->email . '/' . $image->filepath . '",';
+                        }
+                        $i++;
+                    }
+                ?>
+            ];
+            var imgsizes = [
+                <?php
+                    foreach ($history as $data) {
+                        $images = $data->images()->get();
+                        foreach ($images as $image) {
+                            $size = getimagesize('images/'.Auth::user()->email.'/'.$image->filepath);
+                            echo ($size[0]/100000).','.($size[1]/100000).',';
                         }
                         $i++;
                     }
@@ -87,35 +94,36 @@
 @if($show_map)
     <h2>Your History</h2>
     <div id="map-parent">
-        <div id="map-canvas"> </div>    
-        <img id="map-img" style="width:auto; height:90%; " onclick="clickImage();" />
-        </span>
+        <div id="map-canvas"> </div>
+        <a id="lightbox" href="#">
+            <img id="map-img" />
+            <!--div> At Location:... UNCOMMENT THIS TO PUT TEXT WITH IMAGE </div--> 
+        </a>
     </div>
-    <!--div class="container" style="margin-top:50px"-->
-        <table class="table" style="margin-top:50px">
-            <thead>
-                <tr>
-                    <th>Phone Id</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                    <th>Speed</th>
-                    <th>Direction</th>
-                    <th>Time</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                foreach ($history as $data)
-                echo '<tr>
-                        <td>'.$data->phone_id.'</td>
-                        <td>'.$data->latitude.'</td>
-                        <td>'.$data->longitude.'</td>
-                        <td>'.$data->speed.'</td>
-                        <td>'.$data->direction.'</td>
-                        <td>'.$data->time.'</td>
-                    </tr>'
-                ?>
-            </tbody>
-        </table>     
-    <!--/div-->                             
+
+    <table class="table" style="margin-top:50px">
+        <thead>
+            <tr>
+                <th>Phone Id</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Speed</th>
+                <th>Direction</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($history as $data)
+            echo '<tr>
+                    <td>'.$data->phone_id.'</td>
+                    <td>'.$data->latitude.'</td>
+                    <td>'.$data->longitude.'</td>
+                    <td>'.$data->speed.'</td>
+                    <td>'.$data->direction.'</td>
+                    <td>'.$data->time.'</td>
+                </tr>'
+            ?>
+        </tbody>
+    </table>                          
 @endif

@@ -1,18 +1,20 @@
-    function clickImage() {
-        document.getElementById("map-img").removeAttribute('src');
-    }
-
     var map;
-    function addImage(lat, lng, imgsrc) {
+    function addImage(lat, lng, width, height, imgsrc) {
             var imgOverlay;
-            var bnd = 0.025 * Math.pow(2,12) / Math.pow(2, map.getZoom());
+            var bndw = width * Math.pow(2,12) / Math.pow(2, map.getZoom());
+            var bndh = height * Math.pow(2,12) / Math.pow(2, map.getZoom());
+            var newlat = lat + (Math.random()-0.5)*map.getZoom()/300000;
+            var newlng = lng + (Math.random()-0.5)*map.getZoom()/300000;
+
             var imageBounds = new google.maps.LatLngBounds(
-                new google.maps.LatLng(lat, lng),
-                new google.maps.LatLng(lat+bnd, lng+bnd));
+                new google.maps.LatLng(newlat, newlng),
+                new google.maps.LatLng(newlat+bndh, newlng+bndw));
             imgOverlay = new google.maps.GroundOverlay(imgsrc, imageBounds);
             imgOverlay.setMap(map);
+
             google.maps.event.addListener(imgOverlay, 'click', function() {
                 document.getElementById("map-img").src = imgsrc;
+                location.hash = "#lightbox";    
             });
             return imgOverlay;
     }
@@ -71,13 +73,14 @@
         google.maps.event.addListener(map, 'zoom_changed', function() {
             for (i=0; i<images.length; ++i)
             {
-                if (typeof imgOverlays[i] != 'undefined') imgOverlays[i].setMap(null);
-                imgOverlays[i] = addImage(points[imagePoints[i]].lat(), points[imagePoints[i]].lng(), images[i]);
-            }
-        });
+                if (typeof imgOverlays[i] != 'undefined') 
+                    imgOverlays[i].setMap(null);
 
-        google.maps.event.addListener(map, 'click', function(){
-            clickImage();
+                
+                imgOverlays[i] = addImage(
+                    points[imagePoints[i]].lat(), points[imagePoints[i]].lng(), 
+                    imgsizes[i*2], imgsizes[i*2+1], images[i]);
+            }
         });
     }
     google.maps.event.addDomListener(window, 'load', initialize);
